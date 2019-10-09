@@ -5,7 +5,6 @@
     using MediatR;
     using Online.Travel.Management.System.API.Entities;
     using Online.Travel.Management.System.API.Model;
-    using global::System.Net.Http;
     using global::System.Threading.Tasks;
     using global::System.Threading;
     using global::System.Collections.Generic;
@@ -16,8 +15,6 @@
     /// </summary>
     public class GetBooking : IRequestHandler<GetBookingRequest, List<Model.BookingResponse>>
     {
-        private readonly HttpClient httpClient;
-
         private IRepository repository;
 
         private IMapper mapper;
@@ -25,12 +22,10 @@
         /// <summary>
         /// GetBookingById constructor
         /// </summary>
-        /// <param name="httpClient"></param>
         /// <param name="repository"></param>
         /// <param name="mapper"></param>
-        public GetBooking(HttpClient httpClient, IRepository repository, IMapper mapper)
+        public GetBooking(IRepository repository, IMapper mapper)
         {
-            this.httpClient = httpClient;
             this.repository = repository;
             this.mapper = mapper;
         }

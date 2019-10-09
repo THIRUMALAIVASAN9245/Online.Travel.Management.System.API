@@ -6,7 +6,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Swashbuckle.AspNetCore.Swagger;
-    using global::System.Net.Http;
     using global::System;
     using global::System.Reflection;
     using AutoMapper;
@@ -55,8 +54,6 @@
             services.AddAutoMapper(Assembly.GetAssembly(typeof(ContractMappingProfile)));
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<ITokenGenerator, TokenGenerator>();
-            var httpClient = new HttpClient();
-            services.AddSingleton(httpClient);
 
             string defaultConnectionString = Environment.GetEnvironmentVariable("UserInfoDb") ??
                                              Configuration.GetConnectionString("DefaultConnection");
