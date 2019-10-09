@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Online.Travel.AuthService.API
+namespace Online.Travel.Online.Travel.AuthService.API
 {
     public class Startup
     {
