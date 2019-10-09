@@ -23,7 +23,7 @@ namespace Online.Travel.Management.System.API.Test
         public async Task HandleWithValidCreateRequestCallSaveAsExpectedResultGetAllAsync()
         {
             // Arrange                    
-            var bookingModel = new BookingRequest { Operation = "GetAll" };
+            var bookingModelRequest = new BookingRequest { Operation = "GetAll" };
 
             var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); });
             var mapper = new Mapper(config);
@@ -34,7 +34,7 @@ namespace Online.Travel.Management.System.API.Test
               .Returns(bookingList);
 
             underTest = new GetBooking(repository.Object, mapper);
-            request = new GetBookingRequest(bookingModel);
+            request = new GetBookingRequest(bookingModelRequest);
 
             // Act
             CancellationToken cancellationToken;
@@ -49,7 +49,7 @@ namespace Online.Travel.Management.System.API.Test
         public async Task HandleWithValidCreateRequestCallSaveAsExpectedResultGetByCustomerAsync()
         {
             // Arrange                    
-            var bookingModel = new BookingRequest { Id = 1, Operation = "GetByCustomer" };
+            var bookingModelRequest = new BookingRequest { Id = 1, Operation = "GetByCustomer" };
 
             var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); });
             var mapper = new Mapper(config);
@@ -60,7 +60,7 @@ namespace Online.Travel.Management.System.API.Test
               .Returns(bookingList);
 
             underTest = new GetBooking(repository.Object, mapper);
-            request = new GetBookingRequest(bookingModel);
+            request = new GetBookingRequest(bookingModelRequest);
 
             // Act
             CancellationToken cancellationToken;
@@ -75,7 +75,7 @@ namespace Online.Travel.Management.System.API.Test
         public async Task HandleWithValidCreateRequestCallSaveAsExpectedResultGetByEmployeeAsync()
         {
             // Arrange                    
-            var bookingModel = new BookingRequest { Id = 2, Operation = "GetByEmployee" };
+            var bookingModelRequest = new BookingRequest { Id = 2, Operation = "GetByEmployee" };
 
             var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); });
             var mapper = new Mapper(config);
@@ -86,7 +86,7 @@ namespace Online.Travel.Management.System.API.Test
               .Returns(bookingList);
 
             underTest = new GetBooking(repository.Object, mapper);
-            request = new GetBookingRequest(bookingModel);
+            request = new GetBookingRequest(bookingModelRequest);
 
             // Act
             CancellationToken cancellationToken;
