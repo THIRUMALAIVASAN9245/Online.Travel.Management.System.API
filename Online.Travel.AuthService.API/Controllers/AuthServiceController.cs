@@ -62,6 +62,39 @@
         }
 
         /// <summary>
+        /// Get user info
+        /// </summary>
+        /// <param name="id">user Id</param>
+        /// <returns>Get userinfo details</returns>
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(200, Type = typeof(UserModel))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var response = await mediatR.Send(new GetUserInfoRequest(id));
+
+                if (response == null)
+                {
+                    return NotFound("User Not exists in the DB or error occurred");
+                }
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error Occurred While getting The user info" + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// verify user detail
         /// </summary>
         /// <param name="user">login user info</param>
@@ -83,12 +116,12 @@
 
                 if (response == null)
                 {
-                    return NotFound($"Email Id {userModelRequest.Email} not found");
+                    return NotFound($"User Email {userModelRequest.Email} not found");
                 }
 
-                string value = tokenGenerator.GetJwtTokenLoggedinUser(userModelRequest);
+                string userInfoWithToken = tokenGenerator.GetJwtTokenLoggedinUser(userModelRequest);
 
-                return Ok(value);
+                return Ok(userInfoWithToken);
             }
             catch (Exception ex)
             {

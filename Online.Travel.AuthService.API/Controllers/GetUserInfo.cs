@@ -10,9 +10,9 @@
     using global::System.Linq;
 
     /// <summary>
-    /// LoginUser class
+    /// GetUserInfo class
     /// </summary>
-    public class LoginUser : IRequestHandler<LoginUserRequest, UserModel>
+    public class GetUserInfo : IRequestHandler<GetUserInfoRequest, UserModel>
     {
         private IRepository repository;
 
@@ -23,28 +23,26 @@
         /// </summary>
         /// <param name="repository">IRepository</param>
         /// <param name="mapper">IMapper</param>
-        public LoginUser(IRepository repository, IMapper mapper)
+        public GetUserInfo(IRepository repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;
         }
 
         /// <summary>
-        /// Handle method to verify user info
+        /// Handle method to get user info
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<UserModel> Handle(LoginUserRequest request, CancellationToken cancellationToken)
+        public async Task<UserModel> Handle(GetUserInfoRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
             {
                 return await Task.FromResult<UserModel>(null);
             }
 
-            var userDetail = repository.Query<UserDetail>()
-                .FirstOrDefault(user => user.Email == request.UserRequest.Email &&
-                user.PhoneNumber == request.UserRequest.PhoneNumber);
+            var userDetail = repository.Query<UserDetail>().FirstOrDefault(user => user.Id == request.Id);
 
             if (userDetail != null)
             {
