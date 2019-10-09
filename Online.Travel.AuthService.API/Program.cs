@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Online.Travel.AuthService.API
+namespace Online.Travel.Online.Travel.AuthService.API
 {
     public class Program
     {
