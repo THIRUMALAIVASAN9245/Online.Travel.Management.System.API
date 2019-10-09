@@ -46,7 +46,7 @@
                 .FirstOrDefault(user => user.Email == request.UserRequest.Email &&
                 user.PhoneNumber == request.UserRequest.PhoneNumber);
 
-            if (userDetail != null)
+            if (userDetail == null)
             {
                 return await Task.FromResult<UserModel>(null);
             }

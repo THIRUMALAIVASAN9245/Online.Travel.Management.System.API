@@ -44,7 +44,7 @@
 
             var userDetail = repository.Query<UserDetail>().FirstOrDefault(user => user.Id == request.Id);
 
-            if (userDetail != null)
+            if (userDetail == null)
             {
                 return await Task.FromResult<UserModel>(null);
             }

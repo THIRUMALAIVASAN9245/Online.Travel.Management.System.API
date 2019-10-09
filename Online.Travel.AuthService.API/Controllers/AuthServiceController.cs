@@ -100,6 +100,7 @@
         /// <param name="user">login user info</param>
         /// <returns>verify user detail</returns>
         [HttpPost]
+        [Route("login")]
         [ProducesResponseType(201, Type = typeof(UserModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
