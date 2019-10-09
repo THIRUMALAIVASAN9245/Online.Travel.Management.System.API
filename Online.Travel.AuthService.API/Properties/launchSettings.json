@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Online.Travel.Online.Travel.AuthService.API": {
+    "Online.Travel.AuthService.API": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
