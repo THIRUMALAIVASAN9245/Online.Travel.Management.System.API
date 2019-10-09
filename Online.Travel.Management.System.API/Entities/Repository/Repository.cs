@@ -24,5 +24,14 @@ namespace Online.Travel.Management.System.API.Entities.Repository
             movieCruiserDbContext.SaveChanges();
             return entityResult;
         }
+
+        public T Update<T>(T entity) where T : class
+        {
+            EntityEntry<T> entityEntry = movieCruiserDbContext.Entry(entity);
+            movieCruiserDbContext.Set<T>().Attach(entity);
+            entityEntry.State = EntityState.Modified;
+            movieCruiserDbContext.SaveChanges();
+            return entity;
+        }
     }
 }

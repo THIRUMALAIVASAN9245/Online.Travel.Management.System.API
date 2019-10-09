@@ -6,6 +6,8 @@ namespace Online.Travel.Management.System.API.Entities.Repository
     {
         IQueryable<T> Query<T>() where T : class;
 
-        T Save<T>(T entity) where T : class;      
+        T Save<T>(T entity) where T : class;
+
+        T Update<T>(T entity) where T : class;
     }
 }

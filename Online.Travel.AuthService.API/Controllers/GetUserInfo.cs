@@ -42,7 +42,7 @@
                 return await Task.FromResult<UserModel>(null);
             }
 
-            var userDetail = repository.Query<UserDetail>().FirstOrDefault(user => user.Id == request.Id);
+            var userDetail = repository.Get<UserDetail>(request.Id);
 
             if (userDetail == null)
             {
