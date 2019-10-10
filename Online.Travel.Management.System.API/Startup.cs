@@ -11,7 +11,6 @@
     using Online.Travel.Management.System.API.Entities.Repository;
     using Swashbuckle.AspNetCore.Swagger;
     using Online.Travel.Management.System.API.Contract;
-    using global::System.Net.Http;
     using global::System;
     using global::System.Text;
     using global::System.Reflection;
@@ -58,8 +57,6 @@
 
             services.AddAutoMapper(Assembly.GetAssembly(typeof(ContractMappingProfile)));
             services.AddScoped<IRepository, Repository>();
-            var httpClient = new HttpClient();
-            services.AddSingleton(httpClient);
 
             string defaultConnectionString = Environment.GetEnvironmentVariable("TaxiBookingDb") ??
                                              Configuration.GetConnectionString("DefaultConnection");

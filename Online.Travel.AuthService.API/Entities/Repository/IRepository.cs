@@ -8,8 +8,6 @@ namespace Online.Travel.AuthService.API.Entities.Repository
 
         T Get<T> (int key) where T : class;
 
-        void Delete<T>(T entity) where T : class;
-
         T Save<T>(T entity) where T : class;
 
         T Update<T>(T entity) where T : class;        

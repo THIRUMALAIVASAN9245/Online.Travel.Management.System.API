@@ -11,16 +11,18 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "swagger",
       "environmentVariables": {
+        "UserInfoDb": "Server=ChrisVSTSserver\\RLGSQLSERVER;Database=TaxiBookingInfo;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Online.Travel.Online.Travel.AuthService.API": {
+    "Online.Travel.AuthService.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "swagger",
       "environmentVariables": {
+        "UserInfoDb": "Server=ChrisVSTSserver\\RLGSQLSERVER;Database=TaxiBookingInfo;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:51506/"

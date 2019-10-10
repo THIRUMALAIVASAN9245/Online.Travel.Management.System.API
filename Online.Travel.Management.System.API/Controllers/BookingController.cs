@@ -46,7 +46,7 @@
 
                 if (response == null)
                 {
-                    return NotFound("Error Occurred While Creating a Ride");
+                    return StatusCode(409, "Error Occurred While Creating a Ride"); ;
                 }
 
                 return Created("New Ride created", response);
@@ -54,6 +54,39 @@
             catch (Exception ex)
             {
                 return BadRequest("Error Occurred While Creating a Ride" + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Update booking detail
+        /// </summary>
+        /// <param name="watchListModel">Updated booking data object</param>
+        /// <returns>Saved booking data object</returns>
+        [HttpPut]
+        [ProducesResponseType(200, Type = typeof(Booking))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Put([FromBody]Booking bookingModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var response = await mediatR.Send(new UpdateBookingRequest(bookingModel));
+
+                if (response == null)
+                {
+                    return StatusCode(409, "Error Occurred While updating The booking");
+                }
+
+                return Ok(bookingModel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error Occurred While updating The booking" + ex.Message);
             }
         }
 
