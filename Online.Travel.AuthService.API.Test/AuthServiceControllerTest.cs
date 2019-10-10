@@ -82,14 +82,14 @@ namespace Online.Travel.Management.System.API.Test
         public async Task GetCallsMediatRWithExpectedResult()
         {
             // Arrange
-            var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
+            var userModel = new UserInfoRequest { Id = 1, Operation = "GetByCustomer" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
-            mediatR.Setup(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(userModel));
+            mediatR.Setup(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(MockUserListResponse()));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
             // Act
-            var result = await controller.Get(userModel.Id) as OkObjectResult;
+            var result = await controller.GetUserInfo(userModel) as OkObjectResult;
 
             // Assert            
             Assert.NotNull(result);
@@ -103,14 +103,14 @@ namespace Online.Travel.Management.System.API.Test
         public async Task GetCallsMediatRWithExpectedNotFoundResult()
         {
             // Arrange
-            var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
+            var userModel = new UserInfoRequest { Id = 1, Operation = "GetByCustomer" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
-            mediatR.Setup(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<UserModel>(null));
+            mediatR.Setup(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<List<UserModel>>(null));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
             // Act
-            var result = await controller.Get(userModel.Id) as NotFoundObjectResult;
+            var result = await controller.GetUserInfo(userModel) as NotFoundObjectResult;
 
             // Assert
             mediatR.Verify(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>()), Times.Once());
@@ -122,14 +122,14 @@ namespace Online.Travel.Management.System.API.Test
         public async Task GetCallsWithInValidModelStateExpectedNotFoundResult()
         {
             // Arrange
-            var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
+            var userModel = new UserInfoRequest { Id = 1, Operation = "GetByCustomer" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
             controller.ModelState.AddModelError("Email", "Thirumalai@test.com");
 
             // Act
-            var result = await controller.Get(userModel.Id) as BadRequestObjectResult;
+            var result = await controller.GetUserInfo(userModel) as BadRequestObjectResult;
 
             // Assert
             Assert.NotNull(result);

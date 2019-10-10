@@ -56,7 +56,7 @@
                 return await Task.FromResult(getByCustomerResult);
             }
 
-            var getByIdCustomer = repository.Query<Entities.UserDetail>().Where(a => a.Id == request.UserInfoRequest.Id).;
+            var getByIdCustomer = repository.Query<Entities.UserDetail>().Where(a => a.Id == request.UserInfoRequest.Id);
             var result = mapper.Map<List<UserDetail>, List<UserModel>>(getByIdCustomer.ToList());
             return await Task.FromResult(result);
         }
