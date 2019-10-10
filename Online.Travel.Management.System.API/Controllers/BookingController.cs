@@ -60,7 +60,7 @@
         /// <summary>
         /// Update booking detail
         /// </summary>
-        /// <param name="watchListModel">Updated booking data object</param>
+        /// <param name="bookingModel">Updated booking data object</param>
         /// <returns>Saved booking data object</returns>
         [HttpPut]
         [ProducesResponseType(200, Type = typeof(Booking))]

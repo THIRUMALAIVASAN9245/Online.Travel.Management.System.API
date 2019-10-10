@@ -1,9 +1,12 @@
-﻿namespace Online.Travel.AuthService.API.Entities
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Online.Travel.AuthService.API.Entities
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    [ExcludeFromCodeCoverage]
     public class Booking
     {
         ///<Summary>

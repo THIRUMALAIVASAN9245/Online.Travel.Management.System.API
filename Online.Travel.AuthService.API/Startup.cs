@@ -1,4 +1,6 @@
-﻿namespace Online.Travel.AuthService.API
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Online.Travel.AuthService.API
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -18,6 +20,7 @@
     ///<Summary>
     /// Startup class
     ///</Summary>
+    [ExcludeFromCodeCoverage]
     public partial class Startup
     {
         ///<Summary>

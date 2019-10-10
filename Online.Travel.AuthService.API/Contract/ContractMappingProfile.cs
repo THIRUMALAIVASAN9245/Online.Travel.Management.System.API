@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Diagnostics.CodeAnalysis;
+using AutoMapper;
 
 namespace Online.Travel.AuthService.API.Contract
 {
@@ -7,6 +8,7 @@ namespace Online.Travel.AuthService.API.Contract
         /// <summary>
         /// ContractMappingProfile Constructor
         /// </summary>
+        [ExcludeFromCodeCoverage]
         public ContractMappingProfile()
         {
             CreateMap<Model.UserModel, Entities.UserDetail>();

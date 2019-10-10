@@ -1,7 +1,10 @@
-﻿namespace Online.Travel.Management.System.API.Contract
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Online.Travel.Management.System.API.Contract
 {
     using AutoMapper;
 
+    [ExcludeFromCodeCoverage]
     public class ContractMappingProfile : Profile
     {
         /// <summary>
