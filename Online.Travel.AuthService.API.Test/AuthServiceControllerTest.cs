@@ -143,6 +143,7 @@ namespace Online.Travel.Management.System.API.Test
             var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
+            tokenGenerator.Setup(m => m.GetJwtTokenLoggedinUser(It.IsAny<UserModel>())).Returns("JwtSecurityTokenHandlerToken");
             mediatR.Setup(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(userModel));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
@@ -164,6 +165,7 @@ namespace Online.Travel.Management.System.API.Test
             var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
+            tokenGenerator.Setup(m => m.GetJwtTokenLoggedinUser(It.IsAny<UserModel>())).Returns("JwtSecurityTokenHandlerToken");
             mediatR.Setup(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<UserModel>(null));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
@@ -183,6 +185,7 @@ namespace Online.Travel.Management.System.API.Test
             var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
+            tokenGenerator.Setup(m => m.GetJwtTokenLoggedinUser(It.IsAny<UserModel>())).Returns("JwtSecurityTokenHandlerToken");
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
             controller.ModelState.AddModelError("Email", "Thirumalai@test.com");
 
