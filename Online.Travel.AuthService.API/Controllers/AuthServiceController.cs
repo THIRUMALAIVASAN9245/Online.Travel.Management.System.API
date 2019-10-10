@@ -66,11 +66,12 @@
         /// </summary>
         /// <param name="id">user Id</param>
         /// <returns>Get userinfo details</returns>
-        [HttpGet("{id:int}")]
-        [ProducesResponseType(200, Type = typeof(UserModel))]
+        [HttpPost]
+        [Route("GetUserInfo")]
+        [ProducesResponseType(200, Type = typeof(UserModel[]))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetUserInfo(UserInfoRequest userInfoRequest)
         {
             try
             {
@@ -79,7 +80,7 @@
                     return BadRequest(ModelState);
                 }
 
-                var response = await mediatR.Send(new GetUserInfoRequest(id));
+                var response = await mediatR.Send(new GetUserInfoRequest(userInfoRequest));
 
                 if (response == null)
                 {

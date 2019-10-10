@@ -8,11 +8,12 @@
     using global::Online.Travel.AuthService.API.Entities.Repository;
     using global::Online.Travel.AuthService.API.Entities;
     using global::System.Linq;
+    using System.Collections.Generic;
 
     /// <summary>
     /// GetUserInfo class
     /// </summary>
-    public class GetUserInfo : IRequestHandler<GetUserInfoRequest, UserModel>
+    public class GetUserInfo : IRequestHandler<GetUserInfoRequest, List<UserModel>>
     {
         private IRepository repository;
 
@@ -35,22 +36,29 @@
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<UserModel> Handle(GetUserInfoRequest request, CancellationToken cancellationToken)
+        public async Task<List<UserModel>> Handle(GetUserInfoRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
             {
-                return await Task.FromResult<UserModel>(null);
+                return await Task.FromResult<List<UserModel>>(null);
             }
 
-            var userDetail = repository.Get<UserDetail>(request.Id);
-
-            if (userDetail == null)
+            if (request.UserInfoRequest.Operation == "GetByCustomer")
             {
-                return await Task.FromResult<UserModel>(null);
+                var getByCustomer = repository.Query<Entities.UserDetail>().Where(a=>a.RoleId == 1);
+                var getByCustomerResult = mapper.Map<List<UserDetail>, List<UserModel>>(getByCustomer.ToList());
+                return await Task.FromResult(getByCustomerResult);
             }
-            var createUserModel = mapper.Map<UserDetail, UserModel>(userDetail);
+            else if (request.UserInfoRequest.Operation == "GetByEmployee")
+            {
+                var getByCustomer = repository.Query<Entities.UserDetail>().Where(a => a.RoleId == 2);
+                var getByCustomerResult = mapper.Map<List<UserDetail>, List<UserModel>>(getByCustomer.ToList());
+                return await Task.FromResult(getByCustomerResult);
+            }
 
-            return await Task.FromResult(createUserModel);
+            var getByIdCustomer = repository.Query<Entities.UserDetail>().Where(a => a.Id == request.UserInfoRequest.Id).;
+            var result = mapper.Map<List<UserDetail>, List<UserModel>>(getByIdCustomer.ToList());
+            return await Task.FromResult(result);
         }
     }
 }

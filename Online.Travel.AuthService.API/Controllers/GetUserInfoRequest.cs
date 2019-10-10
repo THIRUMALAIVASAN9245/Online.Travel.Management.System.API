@@ -2,21 +2,22 @@
 {
     using global::Online.Travel.AuthService.API.Model;
     using MediatR;
+    using System.Collections.Generic;
 
     /// <summary>
     /// GetUserInfoRequest class
     /// </summary>
-    public class GetUserInfoRequest : IRequest<UserModel>
+    public class GetUserInfoRequest : IRequest<List<UserModel>>
     {
-        public int Id { get; set; }
+        public UserInfoRequest UserInfoRequest { get; set; }
 
         ///<Summary>
         /// GetUserInfoRequest constructor
         ///</Summary>  
-        ///<param name="Id">Guid Id</param>
-        public GetUserInfoRequest(int Id)
+        ///<param name="userInfoRequest">userInfoRequest</param>
+        public GetUserInfoRequest(UserInfoRequest userInfoRequest)
         {
-            this.Id = Id;
+            this.UserInfoRequest = userInfoRequest;
         }
     }
 }
