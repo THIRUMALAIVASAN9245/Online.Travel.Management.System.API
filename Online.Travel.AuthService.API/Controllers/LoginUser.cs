@@ -44,7 +44,7 @@
 
             var userDetail = repository.Query<UserDetail>()
                 .FirstOrDefault(user => user.Email == request.UserRequest.Email &&
-                user.PhoneNumber == request.UserRequest.PhoneNumber);
+                user.Password == request.UserRequest.Password);
 
             if (userDetail == null)
             {

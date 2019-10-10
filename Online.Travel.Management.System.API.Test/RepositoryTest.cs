@@ -34,39 +34,20 @@ namespace Online.Travel.Management.System.API.Test
         public void GetMethodCallRetrunsExeExpectedResult()
         {
             // Arrange
-            movieCruiserDbContext = new Mock<BookingDbContext>();
-            movieCruiserDbContext.Setup(r => r.Set<Booking>()).Returns(GetMockWatchList());
+            var mockBooking = new Booking { Id = 1, PickupLocation = "Chennai", DropLocation = "Bangalore" };
+            var movieCruiserDbContext = new Mock<BookingDbContext>();
+            var dbSetMock = new Mock<DbSet<Booking>>();
+            movieCruiserDbContext.Setup(x => x.Set<Booking>()).Returns(dbSetMock.Object);
+            dbSetMock.Setup(x => x.Find(It.IsAny<int>())).Returns(mockBooking);
             repository = new Repository(movieCruiserDbContext.Object);
 
             // Act            
-            var result = repository.Get<UserDetail>(1);
+            var result = repository.Get<Booking>(1);
 
             // Assert  
-            Assert.NotNull(result);
+            movieCruiserDbContext.Verify(x => x.Set<Booking>());
+            dbSetMock.Verify(x => x.Find(It.IsAny<int>()));
             Assert.Equal(1, result.Id);
-        }
-
-        [Fact]
-        public void SaveMethodCallRetrunsExeExpectedResult()
-        {
-            // Arrange
-            movieCruiserDbContext = new Mock<BookingDbContext>();
-            movieCruiserDbContext.Setup(r => r.Set<Booking>()).Returns(GetMockWatchList());
-            repository = new Repository(movieCruiserDbContext.Object);
-            var bookingModel = new Booking
-            {
-                Id = 1,
-                CustomerId = 1,
-                EmployeeId = 2,
-                PickupLocation = "Chennai",
-                DropLocation = "Bangalore"
-            };
-
-            // Act            
-            var result = repository.Save<Booking>(bookingModel);
-
-            // Assert  
-            Assert.NotNull(result);
         }
 
         private static DbSet<Booking> GetMockWatchList()

@@ -25,7 +25,7 @@ namespace Online.Travel.Management.System.API.Test
             // Arrange                    
             var bookingModel = new Booking { Id = 299536, DropLocation = "Chennai, Chrompet" };
 
-            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); });
+            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); m.CreateMap<Booking, Entities.Booking>(); });
             var mapper = new Mapper(config);
             var bookingList = MockBookingListResponse().ToList().AsQueryable();
 

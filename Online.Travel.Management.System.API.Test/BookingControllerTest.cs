@@ -100,13 +100,12 @@ namespace Online.Travel.Management.System.API.Test
             controller = new BookingController(mediatR.Object);
 
             // Act
-            var result = await controller.GetBooking(bookingModelRequest) as OkObjectResult;
+            var result = await controller.GetBooking(bookingModelRequest) as NotFoundObjectResult;
 
             // Assert            
+            mediatR.Verify(m => m.Send(It.IsAny<GetBookingRequest>(), It.IsAny<CancellationToken>()), Times.Once());
             Assert.NotNull(result);
-            var bookingResponse = result.Value as List<BookingResponse>;
-            Assert.NotNull(bookingResponse);
-            Assert.Equal(2, bookingResponse.Count);
+            Assert.Equal(404, result.StatusCode);
         }
 
         private static List<BookingResponse> MockBookingListResponse()

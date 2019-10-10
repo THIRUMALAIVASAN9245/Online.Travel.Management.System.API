@@ -46,7 +46,7 @@
 
                 if (response == null)
                 {
-                    return NotFound("Error Occurred While Creating a Ride");
+                    return StatusCode(409, "Error Occurred While Creating a Ride"); ;
                 }
 
                 return Created("New Ride created", response);
@@ -79,14 +79,14 @@
 
                 if (response == null)
                 {
-                    return NotFound("WatchList Not exists in the DB or error occurred");
+                    return StatusCode(409, "Error Occurred While updating The booking");
                 }
 
                 return Ok(bookingModel);
             }
             catch (Exception ex)
             {
-                return BadRequest("Error Occurred While updating The Watchlist list" + ex.Message);
+                return BadRequest("Error Occurred While updating The booking" + ex.Message);
             }
         }
 

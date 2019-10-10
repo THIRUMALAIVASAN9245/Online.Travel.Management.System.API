@@ -85,15 +85,15 @@ namespace Online.Travel.Management.System.API.Test
             var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
-            mediatR.Setup(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(userModel));
+            mediatR.Setup(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(userModel));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
             // Act
-            var result = await controller.Get(userModel.Id) as CreatedResult;
+            var result = await controller.Get(userModel.Id) as OkObjectResult;
 
             // Assert            
             Assert.NotNull(result);
-            Assert.Equal(201, result.StatusCode);
+            Assert.Equal(200, result.StatusCode);
             var userDetail = result.Value as UserModel;
             Assert.NotNull(userDetail);
             Assert.Equal("Thirumalai", userDetail.FirstName);
@@ -106,16 +106,16 @@ namespace Online.Travel.Management.System.API.Test
             var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
-            mediatR.Setup(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<UserModel>(null));
+            mediatR.Setup(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<UserModel>(null));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
             // Act
-            var result = await controller.Get(userModel.Id) as ObjectResult;
+            var result = await controller.Get(userModel.Id) as NotFoundObjectResult;
 
             // Assert
-            mediatR.Verify(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>()), Times.Once());
+            mediatR.Verify(m => m.Send(It.IsAny<GetUserInfoRequest>(), It.IsAny<CancellationToken>()), Times.Once());
             Assert.NotNull(result);
-            Assert.Equal(409, result.StatusCode);
+            Assert.Equal(404, result.StatusCode);
         }
 
         [Fact]
@@ -144,18 +144,18 @@ namespace Online.Travel.Management.System.API.Test
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
             tokenGenerator.Setup(m => m.GetJwtTokenLoggedinUser(It.IsAny<UserModel>())).Returns("JwtSecurityTokenHandlerToken");
-            mediatR.Setup(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(userModel));
+            mediatR.Setup(m => m.Send(It.IsAny<LoginUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(userModel));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
             // Act
-            var result = await controller.Login(userModel) as CreatedResult;
+            var result = await controller.Login(userModel) as OkObjectResult;
 
             // Assert            
             Assert.NotNull(result);
-            Assert.Equal(201, result.StatusCode);
-            var userDetail = result.Value as UserModel;
-            Assert.NotNull(userDetail);
-            Assert.Equal("Thirumalai", userDetail.FirstName);
+            Assert.Equal(200, result.StatusCode);
+            var jwtSecurityToken = result.Value as string;
+            Assert.NotNull(jwtSecurityToken);
+            Assert.Equal("JwtSecurityTokenHandlerToken", jwtSecurityToken);
         }
 
         [Fact]
@@ -166,16 +166,16 @@ namespace Online.Travel.Management.System.API.Test
             mediatR = new Mock<IMediator>();
             tokenGenerator = new Mock<ITokenGenerator>();
             tokenGenerator.Setup(m => m.GetJwtTokenLoggedinUser(It.IsAny<UserModel>())).Returns("JwtSecurityTokenHandlerToken");
-            mediatR.Setup(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<UserModel>(null));
+            mediatR.Setup(m => m.Send(It.IsAny<LoginUserRequest>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult<UserModel>(null));
             controller = new AuthServiceController(mediatR.Object, tokenGenerator.Object);
 
             // Act
-            var result = await controller.Login(userModel) as ObjectResult;
+            var result = await controller.Login(userModel) as NotFoundObjectResult;
 
             // Assert
-            mediatR.Verify(m => m.Send(It.IsAny<CreateUserRequest>(), It.IsAny<CancellationToken>()), Times.Once());
+            mediatR.Verify(m => m.Send(It.IsAny<LoginUserRequest>(), It.IsAny<CancellationToken>()), Times.Once());
             Assert.NotNull(result);
-            Assert.Equal(409, result.StatusCode);
+            Assert.Equal(404, result.StatusCode);
         }
 
         [Fact]

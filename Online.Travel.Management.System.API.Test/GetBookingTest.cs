@@ -25,13 +25,16 @@ namespace Online.Travel.Management.System.API.Test
             // Arrange                    
             var bookingModelRequest = new BookingRequest { Operation = "GetAll" };
 
-            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); });
+            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); m.CreateMap<Entities.UserDetail, UserModel>(); });
             var mapper = new Mapper(config);
             var bookingList = MockBookingListResponse().ToList().AsQueryable();
+            var userList = MockUserListResponse().ToList().AsQueryable();
 
             repository = new Mock<IRepository>();
             repository.Setup(m => m.Query<Entities.Booking>())
               .Returns(bookingList);
+            repository.Setup(m => m.Query<Entities.UserDetail>())
+           .Returns(userList);
 
             underTest = new GetBooking(repository.Object, mapper);
             request = new GetBookingRequest(bookingModelRequest);
@@ -51,13 +54,16 @@ namespace Online.Travel.Management.System.API.Test
             // Arrange                    
             var bookingModelRequest = new BookingRequest { Id = 1, Operation = "GetByCustomer" };
 
-            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); });
+            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); m.CreateMap<Entities.UserDetail, UserModel>(); });
             var mapper = new Mapper(config);
             var bookingList = MockBookingListResponse().ToList().AsQueryable();
+            var userList = MockUserListResponse().ToList().AsQueryable();
 
             repository = new Mock<IRepository>();
             repository.Setup(m => m.Query<Entities.Booking>())
               .Returns(bookingList);
+            repository.Setup(m => m.Query<Entities.UserDetail>())
+             .Returns(userList);
 
             underTest = new GetBooking(repository.Object, mapper);
             request = new GetBookingRequest(bookingModelRequest);
@@ -77,13 +83,16 @@ namespace Online.Travel.Management.System.API.Test
             // Arrange                    
             var bookingModelRequest = new BookingRequest { Id = 2, Operation = "GetByEmployee" };
 
-            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); });
+            var config = new MapperConfiguration(m => { m.CreateMap<Entities.Booking, Booking>(); m.CreateMap<Entities.UserDetail, UserModel>(); });
             var mapper = new Mapper(config);
             var bookingList = MockBookingListResponse().ToList().AsQueryable();
+            var userList = MockUserListResponse().ToList().AsQueryable();
 
             repository = new Mock<IRepository>();
             repository.Setup(m => m.Query<Entities.Booking>())
               .Returns(bookingList);
+            repository.Setup(m => m.Query<Entities.UserDetail>())
+             .Returns(userList);
 
             underTest = new GetBooking(repository.Object, mapper);
             request = new GetBookingRequest(bookingModelRequest);
@@ -106,13 +115,13 @@ namespace Online.Travel.Management.System.API.Test
                     Id = 1,
                     CustomerId = 1,
                     EmployeeId = 2,
-                  PickupLocation = "Chennai",
+                    PickupLocation = "Chennai",
                     DropLocation = "Bangalore"
                 },
                 new Entities.Booking
                 {
-                     Id = 1,
-                    CustomerId = 3,
+                    Id = 2,
+                    CustomerId = 2,
                     EmployeeId = 2,
                     PickupLocation = "Chennai",
                     DropLocation = "Bangalore"
@@ -120,6 +129,25 @@ namespace Online.Travel.Management.System.API.Test
             };
 
             return bookingList;
+        }
+
+        private static List<Entities.UserDetail> MockUserListResponse()
+        {
+            var userList = new List<Entities.UserDetail>
+            {
+                new Entities.UserDetail
+                {
+                    Id = 1,
+                    FirstName = "Vasan"
+                },
+                new Entities.UserDetail
+                {
+                    Id = 2,
+                   FirstName = "Thirumalai"
+                }
+            };
+
+            return userList;
         }
     }
 }

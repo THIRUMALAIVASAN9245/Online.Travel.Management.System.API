@@ -26,7 +26,7 @@ namespace Online.Travel.Management.System.API.Test
             // Arrange                    
             var userModel = new UserModel { Id = 299536, FirstName = "Thirumalai" };
 
-            var config = new MapperConfiguration(m => { m.CreateMap<UserDetail, UserModel>(); });
+            var config = new MapperConfiguration(m => { m.CreateMap<UserDetail, UserModel>(); m.CreateMap<UserModel, UserDetail>(); });
             var mapper = new Mapper(config);
             var UserList = MockUserListResponse().ToList().AsQueryable();
 

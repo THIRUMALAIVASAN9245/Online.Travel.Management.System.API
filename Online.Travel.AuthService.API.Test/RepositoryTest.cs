@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 using Online.Travel.AuthService.API.Entities;
 using Online.Travel.AuthService.API.Entities.Repository;
@@ -34,36 +35,20 @@ namespace Online.Travel.AuthService.API.Test
         public void GetMethodCallRetrunsExeExpectedResult()
         {
             // Arrange
-            movieCruiserDbContext = new Mock<AuthServiceDbContext>();
-            movieCruiserDbContext.Setup(r => r.Set<UserDetail>()).Returns(GetMockWatchList());
+            var mockUserDetail = new UserDetail { Id = 1, FirstName = "Thiru", LastName = "Vasan" };
+            var movieCruiserDbContext = new Mock<AuthServiceDbContext>();
+            var dbSetMock = new Mock<DbSet<UserDetail>>();
+            movieCruiserDbContext.Setup(x => x.Set<UserDetail>()).Returns(dbSetMock.Object);
+            dbSetMock.Setup(x => x.Find(It.IsAny<int>())).Returns(mockUserDetail);
             repository = new Repository(movieCruiserDbContext.Object);
 
             // Act            
             var result = repository.Get<UserDetail>(1);
 
             // Assert  
-            Assert.NotNull(result);
+            movieCruiserDbContext.Verify(x => x.Set<UserDetail>());
+            dbSetMock.Verify(x => x.Find(It.IsAny<int>()));
             Assert.Equal(1, result.Id);
-        }
-
-        [Fact]
-        public void SaveMethodCallRetrunsExeExpectedResult()
-        {
-            // Arrange
-            movieCruiserDbContext = new Mock<AuthServiceDbContext>();
-            movieCruiserDbContext.Setup(r => r.Set<UserDetail>()).Returns(GetMockWatchList());
-            repository = new Repository(movieCruiserDbContext.Object);
-            var bookingModel = new UserDetail
-            {
-                Id = 1,
-                FirstName = "Thiru"
-            };
-
-            // Act            
-            var result = repository.Save<UserDetail>(bookingModel);
-
-            // Assert  
-            Assert.NotNull(result);
         }
 
         private static DbSet<UserDetail> GetMockWatchList()

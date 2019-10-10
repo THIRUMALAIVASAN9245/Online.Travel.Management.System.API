@@ -24,7 +24,7 @@ namespace Online.Travel.Management.System.API.Test
         public async Task HandleWithValidCreateRequestCallSaveAsExpectedResultAsync()
         {
             // Arrange                    
-            var userModel = new UserModel { Id = 1, FirstName = "Thirumalai", Email = "Thirumalai@test.com", Password = "Test@123" };
+            var userModel = new UserModel { Id = 1, FirstName = "Thirumalai", PhoneNumber = 123456, Email = "Thirumalai@test.com", Password = "Test@123" };
 
             var config = new MapperConfiguration(m => { m.CreateMap<UserDetail, UserModel>(); });
             var mapper = new Mapper(config);
@@ -53,11 +53,11 @@ namespace Online.Travel.Management.System.API.Test
             {
                 new UserDetail
                 {
-                    Id = 1, FirstName = "Vasan"
+                    Id = 1, FirstName = "Thirumalai", PhoneNumber = 123456, Email = "Thirumalai@test.com", Password = "Test@123"
                 },
                 new UserDetail
                 {
-                    Id = 2, FirstName = "Rathish"
+                    Id = 1, FirstName = "Rathish", PhoneNumber = 123456, Email = "Rathish@test.com", Password = "Test@123"
                 }
             };
 
