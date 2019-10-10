@@ -18,6 +18,11 @@ namespace Online.Travel.Management.System.API.Entities.Repository
             return movieCruiserDbContext.Set<T>().AsQueryable();
         }
 
+        public T Get<T>(int key) where T : class
+        {
+            return this.movieCruiserDbContext.Set<T>().Find(key);
+        }
+
         public T Save<T>(T entity) where T : class
         {
             var entityResult = movieCruiserDbContext.Set<T>().Add(entity).Entity;

@@ -31,6 +31,22 @@ namespace Online.Travel.Management.System.API.Test
         }
 
         [Fact]
+        public void GetMethodCallRetrunsExeExpectedResult()
+        {
+            // Arrange
+            movieCruiserDbContext = new Mock<BookingDbContext>();
+            movieCruiserDbContext.Setup(r => r.Set<Booking>()).Returns(GetMockWatchList());
+            repository = new Repository(movieCruiserDbContext.Object);
+
+            // Act            
+            var result = repository.Get<UserDetail>(1);
+
+            // Assert  
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Id);
+        }
+
+        [Fact]
         public void SaveMethodCallRetrunsExeExpectedResult()
         {
             // Arrange
