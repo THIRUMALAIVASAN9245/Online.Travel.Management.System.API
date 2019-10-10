@@ -10,7 +10,7 @@ namespace Online.Travel.Management.System.API.Controllers
     /// <summary>
     /// UpdateBooking class
     /// </summary>
-    public class UpdateBooking : IRequestHandler<UpdateBookingRequest, UserModel>
+    public class UpdateBooking : IRequestHandler<UpdateBookingRequest, Booking>
     {
         private IRepository repository;
 
@@ -33,25 +33,25 @@ namespace Online.Travel.Management.System.API.Controllers
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<UserModel> Handle(UpdateBookingRequest request, CancellationToken cancellationToken)
+        public Task<Booking> Handle(UpdateBookingRequest request, CancellationToken cancellationToken)
         {
             if (request == null)
             {
-                return Task.FromResult<UserModel>(null);
+                return Task.FromResult<Booking>(null);
             }
 
-            var userDetail = repository.Get<Entities.Booking>(request.UserModel.Id);
+            var bookingDetail = repository.Get<Entities.Booking>(request.BookingModel.Id);
 
-            if (userDetail == null)
+            if (bookingDetail == null)
             {
-                return Task.FromResult<UserModel>(null);
+                return Task.FromResult<Booking>(null);
             }
 
-            mapper.Map(request.UserModel, userDetail);
+            mapper.Map(request.BookingModel, bookingDetail);
 
-            repository.Update(userDetail);
+            repository.Update(bookingDetail);
 
-            return Task.FromResult(request.UserModel);
+            return Task.FromResult(request.BookingModel);
         }
     }
 }

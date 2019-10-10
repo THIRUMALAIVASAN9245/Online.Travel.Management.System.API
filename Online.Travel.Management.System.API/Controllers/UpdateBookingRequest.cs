@@ -6,17 +6,17 @@ namespace Online.Travel.Management.System.API.Controllers
     /// <summary>
     /// UpdateBookingRequest class
     /// </summary>
-    public class UpdateBookingRequest : IRequest<UserModel>
+    public class UpdateBookingRequest : IRequest<Booking>
     {
-        public UserModel UserModel { get; set; }
+        public Booking BookingModel { get; set; }
 
         ///<Summary>
         /// UpdateBookingRequest constructor
         ///</Summary>  
-        ///<param name="userModel">userModel</param>
-        public UpdateBookingRequest(UserModel userModel)
+        ///<param name="bookingModel">bookingModel</param>
+        public UpdateBookingRequest(Booking bookingModel)
         {
-            this.UserModel = userModel;
+            this.BookingModel = bookingModel;
         }
     }
 }

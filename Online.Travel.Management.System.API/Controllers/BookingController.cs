@@ -58,6 +58,39 @@
         }
 
         /// <summary>
+        /// Update booking detail
+        /// </summary>
+        /// <param name="watchListModel">Updated booking data object</param>
+        /// <returns>Saved booking data object</returns>
+        [HttpPut]
+        [ProducesResponseType(200, Type = typeof(Booking))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Put([FromBody]Booking bookingModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var response = await mediatR.Send(new UpdateBookingRequest(bookingModel));
+
+                if (response == null)
+                {
+                    return NotFound("WatchList Not exists in the DB or error occurred");
+                }
+
+                return Ok(bookingModel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error Occurred While updating The Watchlist list" + ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Get Rides
         /// </summary>
         /// <returns>list of Ride</returns>
